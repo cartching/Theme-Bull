@@ -1,0 +1,130 @@
+<!--/
+	Cartching Template / Bull v2.0
+	http://cartching.com | Copyright (c) Cartching, {{now.year}}
+/-->
+
+<!-- #EXTENDS file="theme.html" -->
+
+
+
+<!-- #BLOCK for="pagetitle_area" -->
+<!-- #ENDBLOCK -->
+
+
+
+<!-- #BLOCK for="content_area" -->
+
+
+
+
+    <!-- #IF {{customer.loggedin}} -->
+    
+        <h2>Welcome back <em>{{customer.firstname}}</em>!</h2>
+        <h4>Update your <a href="/account/">Account</a>, or manage your <a href="/orders/">Orders</a>.</h4>
+    
+        <!-- #IF {{snippets.customer-welcome-message}} -->
+        <div class="customer-welcome-message">
+            {{snippets.customer-welcome-message}}
+        </div>    
+        <!-- #ENDIF -->
+    
+        <hr />
+    
+    <!-- #ELSE -->
+
+
+        <!-- #IF {{snippets.shop-page-callout}} -->
+    
+        <script type="text/javascript" src="http://cachedcommons.org/cache/jquery-cycle/2.8.6/javascripts/jquery-cycle-min.js"></script>
+        <script type="text/javascript">
+            $(".cycle").cycle({
+                fx: 'fade'
+            });
+        </script>
+    
+        <div id="shop-page-callout" class="shop-page-callout">
+            <div class="cycle">{{snippets.shop-page-callout}}</div>
+        </div>    
+        
+        <!-- #ELSE -->
+        <!-- 
+        
+        // - Add a Snippet named "Shop Page Callout"    
+        // - Add Links, Images
+    
+        <div id="shop-page-callout" class="shop-page-callout">
+    
+            <a href="http://"><img src="http://" alt="" title="" /></a>
+        
+        </div>
+        -->
+        <!-- #ENDIF -->
+
+
+    <!-- #ENDIF -->
+
+
+
+	<!-- #IF {{products.featured}} -->
+    <div class="product-list featured">
+    
+        <!--#FOREACH {{product in products.featured | shuffle | pick(12) }} -->
+        <div class="hproduct product-listitem {{product.slug}}">
+        <div class="inner">
+
+
+            <!-- #IF {{product.image}} -->
+            <div class="product-photo"><a title="{{product.name | html_encode}} / {{product.price | money}}" href="{{product.url}}" class="url" rel="product"><img src="{{product.image}}?w=200&h=230&crop=false" alt="{{product.excerpt | html_encode}}" class="photo" /></a></div>
+            <!-- #ENDIF -->
+
+            <p class="price">
+                <!-- #IF {{product.onsale}} -->
+                <del><span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.fullprice | money_dollars}}</span><!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF --></del>
+                <!-- #ENDIF -->
+                <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+            </p>
+
+            <h4 class="title" title="{{product.name | html_encode}} / {{product.price | money}}"><a href="{{product.url}}" class="url" rel="product" title="{{product.name | html_encode}}">{{product.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
+
+		</div>
+        </div>
+        <!--#NEXT -->
+    
+        <div class="clear"></div>
+        
+    </div>
+
+
+    <!-- #ELSE -->
+    <div class="product-list featured all">
+
+
+        <!--#FOREACH {{product in products.all | shuffle | pick(4) }} -->
+        <div class="hproduct product-listitem {{product.slug}}">
+        <div class="inner">
+
+            <div class="product-photo">
+                <a title="{{product.name | html_encode}} / {{product.price | money}}" href="{{product.url}}" class="url" rel="product"><img src="{{product.image}}?w=178&h=190&crop=false" alt="{{product.excerpt | html_encode}}" class="photo" /></a>
+            </div>
+
+            <p class="price">
+                <!-- #IF {{product.onsale}} -->
+                <del><span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.fullprice | money_dollars}}</span><!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF --></del>
+                <!-- #ENDIF -->
+                <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+            </p>
+
+            <h4 class="title" title="{{product.name | html_encode}} / {{product.price | money}}"><a href="{{product.url}}" class="url" rel="product" title="{{product.name | html_encode}}">{{product.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
+
+		</div>
+        </div>
+        <!--#NEXT -->
+
+        <div class="clear"></div>
+        
+    </div>    
+    <!-- #ENDIF -->    
+
+
+
+<!-- #ENDBLOCK -->

@@ -1,0 +1,268 @@
+﻿<!--/
+	Cartching Template / Bull v2.0
+	http://cartching.com | Copyright (c) Cartching, {{now.year}}
+/-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head profile="http://purl.org/uF/2008/03/ http://purl.org/uF/hAtom/0.1/">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+    <!-- #BLOCK name="page_title" --><title>{{page.title | html_encode}} | {{store | html_encode}}</title><!-- #ENDBLOCK -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="title" content="{{store | html_encode}}" />
+    <!-- #BLOCK name="page_keywords" --><!-- #IF {{page.keywords}} --><meta name="keywords" content="{{page.keywords | html_encode}}" /><!-- #ENDIF --><!-- #ENDBLOCK -->
+    <!-- #BLOCK name="page_description" -->
+    <!-- #IF {{page.description}} -->
+    <!-- #var {{ pagedescription = page.description | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+    <!-- #ENDIF -->
+    <!-- #ENDBLOCK -->
+    <meta property="og:site_name" content="{{store | html_encode}}" />
+    <meta property="og:url" content="{{page.url}}" />
+    <meta property="og:title" content="{{page.title | html_encode}}" />
+    <!-- #BLOCK name="page_type" --><meta property="og:type" content="website" /><!-- #ENDBLOCK -->
+    <!-- #BLOCK name="page_image" --><!-- #ENDBLOCK -->
+    
+    <link rel="canonical" href="{{page.url}}" />
+    <link rel="home" title="home" href="{{store.url}}" />
+    <link rel="shortcut icon" href="{{theme.files}}/favicon.ico" />    
+    <!-- <link rel="stylesheet" media="all" href="{{theme.files}}/theme.css?t=v1" /> -->
+    <link rel="stylesheet" type="text/css" href="/themes/bull/files/theme.css" media="screen" />
+    <link rel="stylesheet" media="all" href="{{store.files}}/custom.css" />
+
+	<script type="text/javascript" src="http://cachedcommons.org/cache/jquery/1.4.2/javascripts/jquery-min.js"></script>
+
+    <!-- #BLOCK name="head_content" --><!-- #ENDBLOCK -->
+    
+    <!-- #IF {{snippets.head-content}} -->
+    {{snippets.head-content}}
+    <!-- #ELSE -->
+        <!-- // Snippet: Head Content
+            Example -
+            <meta name="google-site-verification" content="" />
+        -->
+    <!-- #ENDIF -->
+
+
+</head>
+
+
+<!-- #BLOCK name="body_tag" -->    
+<body id="{{page.id}}" class="{{page.id}} {{page.template}}">
+<!-- #ENDBLOCK -->
+
+<a name="top"></a>
+
+<div class="wrapper">
+
+
+
+	<div class="userbar_area">
+
+        <!-- #IF {{customer.loggedin}} -->
+        <div id="userbar" class="userbar loggedin">
+            <ul>
+                <li class="first welcome">Welcome, <strong> {{customer.firstname}}!</strong></li>
+                <li class="account"><a href="/account/">Account</a></li>
+                <li class="orders"><a href="/orders/">Orders</a></li>
+                <!-- #IF {{cart.items.count}} -->
+                <li class="cart"><a href="/cart/">Cart / {{cart.totalprice | money}} ({{cart.items.count}} items)</a></li>
+                <!-- #ENDIF -->
+                <li class="last signout"><a href="/account/logout?returnurl={{page.url}}">Sign Out</a></li>
+            </ul>
+        </div>
+
+        <!-- #ELSE -->
+
+        <div id="userbar" class="userbar signin">
+            <!-- #IF {{cart.items.count}} -->
+            <ul>
+                <li class="first signin"><a href="/account/">Sign In</a></li>
+                <li class="last create_account"><a href="/account#create">Create Account</a></li>
+            </ul>
+            <!-- #ENDIF -->
+
+            <div class="addthis_toolbox addthis_default_style">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_compact"></a>
+            </div>
+
+        </div>
+        <!-- #ENDIF -->
+            
+    </div>
+
+
+
+
+
+    <div class="header_area">
+        <div id="header">
+
+            <div id="logo">
+                <h2><a href="{{store.url}}" title="{{store | html_encode}}">{{store | html_encode}}</a></h2>
+                <!-- #IF {{page.description}} --><p>{{page.description | html_encode}}</p><!-- #ENDIF -->
+            </div>
+
+            <!-- #IF {{cart.items.count}} -->
+            <div class="cart-summary hasitems-{{cart.items | if('true', 'false') }}">
+                <h4>Cart Summary</h4>
+                <p class="cart-totals" title="Total Costs {{cart.totalprice | money}} ({{store.currency}}) with {{cart.items.count}} Item(s)">
+                    <a href="/cart/">
+                    <span class="cart-items"><strong>{{cart.items.count}}</strong> <em>Items</em></span>
+                    <span class="cart-total"><span class="currency">{{store.currency_sign}}</span><strong>{{cart.totalprice | money_without_currency}}</strong></span>
+                    </a>
+                </p>
+    
+                <ul class="cart-menu">
+                    <li><a href="/cart/" class="viewcart" title="View Cart and Checkout">Cart</a></li>
+                    <li><a href="/checkout/" class="checkout" title="View Cart and Checkout">Checkout</a></li>
+                </ul>                        
+            </div>
+            <!-- #ENDIF -->
+    
+        </div>
+    </div>
+
+
+
+
+	<!-- #IF {{ links.nav }} -->
+	<div class="nav_area">	
+		<div id="nav">
+
+			<ul class="nav-links">
+				<!-- #FOREACH {{link in links.nav}} -->
+				<li class="nav-{{link.slug}}"><a href="{{link.url}}" title="{{link.name | html_encode}}">{{link.name | html_encode}}</a></li>
+				<!-- #NEXT -->
+			</ul>
+
+            <!-- #BLOCK name="breadcrumbs_area" -->
+            <!-- #ENDBLOCK -->
+
+		</div>
+	</div>
+	<!-- #ENDIF -->	
+ 
+        
+
+
+    <!-- #IF {{page.hasmessage}} -->
+    <div class="pagemsg_area">    
+	    <div id="pagemsg" class="msg-{{page.messagetype|lowercase}}">
+    
+            <a href="#" class="close" onClick="$('#pagemsg').slideUp();" title="Click to Close">Close</a>
+            <!-- #IF {{page.hasmessagetitle}} --><h3>{{page.messagetitle}}</h3><!-- #ENDIF -->
+            <!-- #IF {{page.hasmessagedetails}} --><p>{{page.messagedetails}}</p><!-- #ENDIF -->
+
+        </div>
+    </div>
+    <!-- #ENDIF -->
+
+
+
+    
+    <!-- #BLOCK name="pagetitle_area" -->    
+    <div class="pagetitle_area">    
+	    <div id="pagetitle">
+            
+            <h1>{{page.title | html_encode}}</h1>
+            
+		</div>
+	</div>
+    <!-- #ENDBLOCK -->
+
+
+
+    
+    <div class="content_area">
+        <div id="content">
+            <!-- #BLOCK name="content_area" -->
+            <!-- #ENDBLOCK -->
+        </div>
+	</div>
+ 
+
+
+	<div class="footer_area">    
+	    <div id="footer">
+
+			<div class="form subscribe">
+            <form id="form-subscribe" action="/mailinglist/subscribe" method="post">
+            <input type="hidden" name="returnurl" value="{{page.url}}" />
+                <fieldset>
+                    <legend>Subscribe</legend>
+                    <p>Get our newsletter</p>
+            
+                    <ul>
+                        <li>
+                            <label>Name</label>
+                            <input type="text" name="name" value="" class="text med required" title="Please provide your Name" />
+                        </li>
+                        <li>
+                            <label>Email</label>
+                            <input type="text" name="email" value="" class="text med required" title="Please provide your Email" />
+                        </li>
+                        <li class="submit">
+                            <button type="submit" class="button submit" title="Click to Subscribe">Go</button>
+                        </li>                        
+                   </ul>
+                </fieldset>
+            </form>
+            </div>
+
+            <div class="nav">                
+                <ul>
+                    <!-- #IF {{cart.items.count}} -->
+                    <li class="first"><a class="viewcart" href="/cart/">Cart</a></li>                    
+                    <li><a href="/account#create" class="create_account">Create Account</a></li>
+                    <!-- #ENDIF -->
+                    <!-- #IF {{customer.loggedin}} -->
+                    <li><a href="/account/logout?returnurl={{page.url}}" class="signout">Sign Out</a></li>
+                    <!-- #ELSE -->
+                    <li class="first"><a href="/account/" class="signin">Sign In</a></li>
+                    <!-- #ENDIF -->
+                    <li><a class="to-top" href="#top">Back to top</a></li>
+                    <li class="last"><a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;username=cartchingapp">Share</a></li>
+                </ul>
+            </div>
+
+            <div class="cite">
+                <p><cite><abbr>&copy;</abbr> {{store | html_encode}} {{now.year}}. All prices <abbr title="{{store.currency_name}}">{{store.currency}}</abbr>.</cite></p>
+                
+                <p class="cartching">Powered by <a href="http://cartching.com/" title="Make yourself a FREE website to sell your products, be up and running in 5 minutes!  Its quick and simple with secure online payments.  No lock-in contracts, No knowledge of web page design or website hosting required. Advanced features also available from $30/month.">Cartching</a></p>
+            </div>            
+
+        </div>
+    </div>
+
+
+   
+
+</div>
+
+<script type="text/javascript" src="http://cachedcommons.org/cache/jquery-validate/1.7.0/javascripts/jquery-validate-min.js"></script>
+<script type="text/javascript" src="{{store.files}}/main.js"></script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=cartchingapp"></script>
+
+<!-- #BLOCK name="script_content" -->
+<!-- #ENDBLOCK -->
+
+<!-- #IF {{snippets.script-content}} -->
+{{snippets.script-content}}
+<!-- #ELSE -->
+    <!-- 
+        // - Add a Snippet named "Script Content"
+        // Like your Google Anayltics Code    
+    -->
+<!-- #ENDIF -->
+
+</body>
+</html>
