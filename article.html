@@ -6,14 +6,30 @@
 <!-- #EXTENDS file="theme.html" -->
 
 
-<!-- #BLOCK for="head_content" -->
-<meta property="og:site_name" content="{{store | html_encode}}" />
-<meta property="og:title" content="{{page.title | html_encode}}" />
+<!-- #BLOCK for="page_title" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><link rel="alternate" type="application/rss+xml" title="{{store | html_encode}}'s Blog" href="{{store.url}}/blog.rss" /><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_keywords" -->
+<!-- #IF {{article.tags}} -->
+    <meta name="keywords" content="<!-- #FOREACH {{tag in article.tags}} -->{{tag}}, <!-- #NEXT -->" />
+<!-- #ELSE -->
+    <!-- #IF {{page.keywords}} --><meta name="keywords" content="{{page.keywords | html_encode}}" /><!-- #ENDIF -->
+<!-- #ENDIF -->
+<!-- #ENDBLOCK --> 
+<!-- #BLOCK for="page_description" -->
+<!-- #IF {{article.excerpt}} -->
+    <!-- #var {{ pagedescription = article.excerpt | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+<!-- #ELSE -->
+    <!-- #IF {{page.description}} -->
+    <!-- #var {{ pagedescription = page.description | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+    <!-- #ENDIF -->
+<!-- #ENDIF -->
 <!-- #ENDBLOCK -->
-
-
-<!-- #BLOCK for="pagetitle_area" -->
-<!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_type" --><meta property="og:type" content="article" /><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_image" --><!-- #IF {{article.image}} --><meta property="og:image" content="{{article.image}}?w=200&h=320&crop=false" /><!-- #ENDIF --><!-- #ENDBLOCK -->
 
 
 

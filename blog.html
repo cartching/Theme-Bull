@@ -5,12 +5,8 @@
 
 <!-- #EXTENDS file="theme.html" -->
 
-
-<!-- #BLOCK for="head_content" -->
-<meta property="og:site_name" content="{{store | html_encode}}" />
-<meta property="og:title" content="{{page.title | html_encode}}" />
-<!-- #ENDBLOCK -->
-
+<!-- #BLOCK for="page_title" --><title>{{store | html_encode}}</title><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><link rel="alternate" type="application/rss+xml" title="{{store | html_encode}}'s Blog" href="{{store.url}}/blog.rss" /><!-- #ENDBLOCK -->
 
 <!-- #BLOCK for="pagetitle_area" -->
 
